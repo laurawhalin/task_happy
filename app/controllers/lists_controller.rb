@@ -1,7 +1,6 @@
 class ListsController < ApplicationController
   def index
-    # @lists = List.where(active: true)
-    @lists = List.where(active: true).entries
+    @lists = List.where(active: true)
   end
 
   def new
@@ -14,7 +13,6 @@ class ListsController < ApplicationController
       redirect_to lists_path
     else
       flash[:error] = "Please try again!"
-      @list = List.new
       render :new
     end
   end
@@ -35,14 +33,13 @@ class ListsController < ApplicationController
 
   def archive
     list = List.find(params[:id])
-    list.archive!(list)
+    list.archive!
     redirect_to lists_path
   end
 
   def archived
-    # @lists = List.where(active: false)
-    @lists = List.where(active: false).entries
-    render action: :index
+    @lists = List.where(active: false)
+    render :index
   end
 
   def destroy

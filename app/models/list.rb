@@ -3,7 +3,7 @@ class List < ActiveRecord::Base
                     uniqueness: { message: "That list title has already been used." }
   has_many :tasks
 
-  def archive!(list)
+  def archive!
     if self.active == true
       self.active = false
     else
