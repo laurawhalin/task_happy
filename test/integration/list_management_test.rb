@@ -76,7 +76,14 @@ class ListManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "can view all archived lists on another page" do
+    create_list(:list, 2, active: false)
+    visit archived_lists_path
 
+    assert page.has_content?("List 1")
+    assert page.has_content?("List 2")
+
+    visit root_url
+    refute page.has_content?("List 1")
+    refute page.has_content?("List 2")
   end
-
 end
