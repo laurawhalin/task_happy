@@ -1,0 +1,27 @@
+<div class="row">
+  <h1>task happy</h1>
+  <h3>the art of making lists</h3>
+
+  <div class="row">
+
+    <%= link_to "create new list", new_list_path, id: "new-list" %>
+    <%= link_to "view archived lists", archived_lists_path %>
+    <% @lists.each do |list| %>
+      <div id="list">
+        <%= list.title %> <%= link_to "update title", edit_list_path(list), id: "edit-title" %>
+        <%= button_to "add task", new_task_path, id: "new-task" %>
+        <% list.tasks.each do |task| %>
+          <%= form_for task do |f| %>
+            <%= f.check_box :status %>
+            <%= f.submit "update" %>
+            <%= f.label :status, task.title %>
+            <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"} %>
+          <% end %>
+        <% end %>
+        <%= link_to "archive list", archive_list_path(list), id: "archive-list" %>
+        <%= link_to "delete list", list, method: :delete, data: { confirm: "Don't be lazy. Deleting this list won't make these tasks do themselves. Are you sure you want to delete?"} %>
+      </div>
+    <% end %>
+
+  </div>
+</div>
