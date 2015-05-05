@@ -1,5 +1,0 @@
-<%= form_for @list, url: list_path(@list.id), method: :put do |f| %>
-  <%= f.label(:title, "title" )%>
-  <%= f.text_field :title, required: true %>
-  <%= f.submit "update title" %>
-<% end %>
