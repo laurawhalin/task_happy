@@ -3,8 +3,14 @@
 <%= form_for @task do |f| %>
   <%= f.label(:title, "title" )%>
   <%= f.text_field :title, required: true %>
+
   <%= f.label(:due_date, "due_date" )%>
   <%= f.text_field :due_date %>
+
+  <%= f.label :image, "Attach an Image" %><br />
+  <%= f.file_field :image %>
+
   <%= f.hidden_field :list_id, value: @list_id %>
+  
   <%= f.submit "add" %>
 <% end %>

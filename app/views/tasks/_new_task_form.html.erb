@@ -1,5 +1,7 @@
-<%= form_for @list do |f| %>
+<%= form_for(@list, html: { multipart: true }) do |f| %>
   <%= f.label(:title, "title" )%>
   <%= f.text_field :title, required: true %>
+  <%= f.label :image, "Attach an Image" %><br />
+  <%= f.file_field :image %>
   <%= f.submit "create list" %>
 <% end %>

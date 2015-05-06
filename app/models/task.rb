@@ -3,6 +3,9 @@ class Task < ActiveRecord::Base
                     uniqueness: { message: "You already added that item to this list!"}
   validates :status, presence: true
 
+  has_attached_file :image, styles: { thumb: "100x100" }
+  validates_attachment_content_type :image, content_type: ["image/jpg", "image/jpeg", "image/png"]
+
   belongs_to :list
 
   before_save :set_due_date
