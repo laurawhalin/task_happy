@@ -15,7 +15,6 @@ class TaskManagementTest < ActionDispatch::IntegrationTest
 
     click_link("add task")
     fill_in("task[title]", with: "Shoulder")
-    # fill_in("task[due_date]", with: "?")
     click_button("add")
 
     tomorrow = Date.tomorrow
@@ -58,27 +57,5 @@ class TaskManagementTest < ActionDispatch::IntegrationTest
 
     assert_equal "complete", list.tasks.first.status
     refute page.has_content?("Do this thing 1")
-  end
-
-  # test "completed tasks can be marked as hidden and shown again" do
-  #   list = create(:list)
-  #   list.tasks << create(:task)
-  #   list.tasks << create(:task, title: "Thing 2", status: "completed")
-  #   visit root_url
-  #
-  #   assert page.has_content?("Do this thing 1")
-  #   refute page.has_content?("Thing 2")
-  #   find(:css, "#task_status[value='1']").set(true)
-  #   refute page.has_content?("do this thing 1")
-  #
-  #   click_link("show completed tasks")
-  #   within(".completed") do
-  #     assert page.has_content?("Do this thing 1")
-  #   end
-  # end
-
-  test "the other things that a task is supposed to do" do
-    # search
-    # filter
   end
 end
