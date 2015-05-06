@@ -1,0 +1,5 @@
+<%= form_for @list do |f| %>
+  <%= f.label(:title, "title" )%>
+  <%= f.text_field :title, required: true %>
+  <%= f.submit "create list" %>
+<% end %>

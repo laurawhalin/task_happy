@@ -10,21 +10,11 @@ class ListManagementTest < ActionDispatch::IntegrationTest
     assert_equal [], list.tasks.all
   end
 
-  test "a list displays items on the index" do
-    skip
-    list = create(:list)
-    list.tasks << create_list(:task, 3)
-    visit root_url
-
-    # assert page.has_unchecked_field?("#task_status", count: 5)
-    assert page.has_css?("#task_status", count: 5)
-  end
-
   test "can view all lists on the index" do
     create_list(:list, 2)
     visit root_url
 
-    page.assert_selector("#list", count: 2)
+    page.assert_selector(".list", count: 2)
     assert page.has_content?("List 1")
     assert page.has_content?("List 2")
   end
@@ -37,7 +27,7 @@ class ListManagementTest < ActionDispatch::IntegrationTest
     click_button("create list")
 
     assert page.has_content?("Parts of Body for Tattoo")
-    assert page.has_button?("add task")
+    assert page.has_link?("add task")
     assert page.has_link?("delete list")
     assert page.has_link?("update title")
     assert page.has_link?("archive list")
@@ -76,7 +66,14 @@ class ListManagementTest < ActionDispatch::IntegrationTest
   end
 
   test "can view all archived lists on another page" do
+    create_list(:list, 2, active: false)
+    visit archived_lists_path
 
+    assert page.has_content?("List 1")
+    assert page.has_content?("List 2")
+
+    visit root_url
+    refute page.has_content?("List 1")
+    refute page.has_content?("List 2")
   end
-
 end
