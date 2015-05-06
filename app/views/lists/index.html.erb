@@ -6,6 +6,10 @@
 
     <%= link_to "create new list", new_list_path, id: "new-list-link", remote: true %>
     <%= link_to "view archived lists", archived_lists_path %>
+
+    <form>
+      <input id= "filter" type="text" name="filter" placeholder="filter">
+    </form>
   </section>
 
   <section class="list-of-lists">
