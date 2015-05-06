@@ -1,27 +1,70 @@
-<div class="row">
-  <h1>task happy</h1>
-  <h3>the art of making lists</h3>
+<div>
 
-  <div class="row">
+  <section class="top-section">
+    <h1>task happy</h1>
+    <h3>the art of making lists</h3>
 
-    <%= link_to "create new list", new_list_path, id: "new-list" %>
+    <%= link_to "create new list", new_list_path, id: "new-list-link", remote: true %>
     <%= link_to "view archived lists", archived_lists_path %>
+  </section>
+
+  <section class="list-of-lists">
     <% @lists.each do |list| %>
-      <div id="list">
-        <%= list.title %> <%= link_to "update title", edit_list_path(list), id: "edit-title" %>
-        <%= button_to "add task", new_task_path, id: "new-task" %>
-        <% list.tasks.each do |task| %>
-          <%= form_for task do |f| %>
-            <%= f.check_box :status %>
-            <%= f.submit "update" %>
-            <%= f.label :status, task.title %>
-            <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"} %>
+      <div class="list">
+        <h4><%= list.title %>&nbsp;&nbsp;&nbsp;<span class="update-title"><%= link_to "update title", edit_list_path(list), id: "edit-title" %></span></h4>
+
+        <%= link_to "add task", new_task_path(list: list.id), class: "new-task" %>
+
+        <div class="incomplete">
+
+          <% list.tasks.incomplete.each do |task| %>
+            <div class="task-row">
+              <%= form_for task, url: completion_task_path(task), method: :put, remote: true do |f| %>
+                  <%= f.check_box :status %>
+                  <%= f.submit "update" %>
+                  <%= f.label :status, task.title %>
+                  <%= task.due_date %>
+                  <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"}, class: "edit-button" %>
+                  <%= link_to "edit", edit_task_path(task, list: list.id), id: "edit-task", class: "edit-button" %>
+              <% end %>
+            </div>
           <% end %>
-        <% end %>
-        <%= link_to "archive list", archive_list_path(list), id: "archive-list" %>
-        <%= link_to "delete list", list, method: :delete, data: { confirm: "Don't be lazy. Deleting this list won't make these tasks do themselves. Are you sure you want to delete?"} %>
+
+          <div class="display-buttons">
+            <button class="show-tasks new-task">show completed tasks</button>
+            <button class="hide-tasks new-task">hide completed tasks</button>
+          </div>
+
+          <!-- < render "partials/task_list", collection: list.tasks, as: :task %> -->
+        </div>
+
+        <div class="completed">
+
+            <% list.tasks.complete.each do |task| %>
+              <div class="task-row">
+                <%= form_for task, url: completion_task_path(task), method: :put, remote: true do |f| %>
+                  <%= f.check_box :status %>
+                  <%= f.submit "update" %>
+                  <%= f.label :status, task.title %>
+                  <%= task.due_date %>
+                  <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"}, class: "edit-button" %>
+                  <%= link_to "edit", edit_task_path(task, list: list.id), id: "edit-task", class: "edit-button" %>
+                <% end %>
+              </div>
+            <% end %>
+        </div>
+
+        <div>
+          <%= link_to "archive list", archive_list_path(list), id: "archive-list", class: "new-task" %>
+          <%= link_to "delete list", list,
+                                     method: :delete,
+                                     data: { confirm: "Don't be lazy. Deleting this list won't make these tasks do themselves. Are you sure you want to delete?"},
+                                     class: "new-task"
+                                     %>
+        </div>
+      </div>
+
       </div>
     <% end %>
-
   </div>
 </div>

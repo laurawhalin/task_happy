@@ -12,5 +12,38 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+// require turbolinks
 //= require_tree .
+
+// jQuery.fn.showTasks = function() {
+//   this.hide();
+//   this.closest('.display-buttons').find('.hide-tasks').show();
+//   $('.completed').show();
+// }
+
+// jQuery.fn.hideTasks = function() {
+//   this.hide();
+//   this.closest('.display-buttons').find('.show-tasks').show();
+//   $('.completed').hide();
+// }
+
+$(document).ready(function() {
+  // $('.show-tasks').showTasks();
+  // $('.hide-tasks').hideTasks();
+  $('.show-tasks').on('click', function() {
+    $(this).hide();
+    $(this).closest('.display-buttons').find('.hide-tasks').show();
+    $('.completed').show();
+  });
+
+  $('.hide-tasks').on('click', function() {
+    $(this).hide();
+    $(this).closest('.display-buttons').find('.show-tasks').show();
+    $('.completed').hide();
+  })
+
+  $('.edit_task').find('input[type=submit]').remove();
+  $('.edit_task').find('input[type=checkbox]').click(function() {
+    $(this).parent('form').submit();
+  });
+});

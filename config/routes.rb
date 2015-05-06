@@ -9,5 +9,10 @@ Rails.application.routes.draw do
       get :archived
     end
   end
-  resources :tasks
+  resources :tasks do
+    member do
+      get "completion"
+      put "completion"
+    end
+  end
 end

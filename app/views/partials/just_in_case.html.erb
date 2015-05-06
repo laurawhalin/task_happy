@@ -1,0 +1,30 @@
+<% tasks.each do |task| %>
+<tr>
+  <%= form_for task do |f| %>
+  <td>
+    <%= f.check_box :status %>
+    <%= f.submit "update" %>
+    <%= f.label :status, task.title %>
+  </td>
+  <td>
+    <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"} %>
+  </td>
+  <% end %>
+</tr>
+<% end %>
+
+
+<%= list.tasks.each do |task| %>
+<tr>
+  <%= form_for task do |f| %>
+  <td>
+    <%= f.check_box :status %>
+    <%= f.submit "update" %>
+    <%= f.label :status, task.title %>
+  </td>
+  <td>
+    <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"} %>
+  </td>
+  <% end %>
+</tr>
+<% end %>

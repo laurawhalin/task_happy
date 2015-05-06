@@ -7,6 +7,22 @@ class Task < ActiveRecord::Base
 
   before_save :set_due_date
 
+  scope :complete, -> { where status: "complete" }
+  scope :incomplete, -> { where status: "incomplete" }
+
+  def complete!(task)
+    if self.status == "complete"
+      self.status = "incomplete"
+    else
+      self.status = "complete"
+    end
+    save
+  end
+
+  def complete?
+    self.status == "complete"
+  end
+
   private
 
   def set_due_date
