@@ -13,7 +13,7 @@ class Task < ActiveRecord::Base
   scope :incomplete, -> { where status: "incomplete" }
   scope :last_updated, -> { order("tasks.updated_at").last }
 
-  def complete!(task)
+  def complete!
     if self.status == "complete"
       self.status = "incomplete"
     else
