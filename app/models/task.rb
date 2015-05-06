@@ -36,10 +36,10 @@ class Task < ActiveRecord::Base
   end
 
   def send_new_task_email
-    NewTaskMailer.new_task_email(email="laurawhalin@gmail.com", Task.last).deliver_later
+    NewTaskMailer.new_task_email(email="laurawhalin@gmail.com", Task.last).deliver_now
   end
 
   def send_update_task_email
-    UpdateTaskMailer.update_task_email(email="laurawhalin@gmail.com", Task.last_updated).deliver_later
+    UpdateTaskMailer.update_task_email(email="laurawhalin@gmail.com", Task.last_updated).deliver_now
   end
 end
