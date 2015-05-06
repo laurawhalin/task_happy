@@ -6,14 +6,14 @@ class Task < ActiveRecord::Base
   belongs_to :list
 
   before_save :set_due_date
-  # after_create :send_new_task_email
-  # after_update :send_update_task_email
+  after_create :send_new_task_email
+  after_update :send_update_task_email
 
   scope :complete, -> { where status: "complete" }
   scope :incomplete, -> { where status: "incomplete" }
   scope :last_updated, -> { order("tasks.updated_at").last }
 
-  def complete!(task)
+  def complete!
     if self.status == "complete"
       self.status = "incomplete"
     else
@@ -32,11 +32,11 @@ class Task < ActiveRecord::Base
     self.due_date = Date.tomorrow if new_record?
   end
 
-  # def send_new_task_email
-  #   NewTaskMailer.new_task_email(email="laurawhalin@gmail.com", Task.last).deliver_now
-  # end
-  #
-  # def send_update_task_email
-  #   UpdateTaskMailer.update_task_email(email="laurawhalin@gmail.com", Task.last_updated).deliver_now
-  # end
+  def send_new_task_email
+    NewTaskMailer.new_task_email(email="laurawhalin@gmail.com", Task.last).deliver_later
+  end
+
+  def send_update_task_email
+    UpdateTaskMailer.update_task_email(email="laurawhalin@gmail.com", Task.last_updated).deliver_later
+  end
 end

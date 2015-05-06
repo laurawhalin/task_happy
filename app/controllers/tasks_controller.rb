@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   def completion
     @task = Task.find(params[:id])
-    task.complete!(task)
+    @task.complete!
     respond_to do |format|
       format.html { redirect_to lists_path }
       format.js

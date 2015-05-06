@@ -12,24 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-// require turbolinks
 //= require_tree .
 
-// jQuery.fn.showTasks = function() {
-//   this.hide();
-//   this.closest('.display-buttons').find('.hide-tasks').show();
-//   $('.completed').show();
-// }
-
-// jQuery.fn.hideTasks = function() {
-//   this.hide();
-//   this.closest('.display-buttons').find('.show-tasks').show();
-//   $('.completed').hide();
-// }
 
 $(document).ready(function() {
-  // $('.show-tasks').showTasks();
-  // $('.hide-tasks').hideTasks();
+
+  //toggles the complete list
   $('.show-tasks').on('click', function() {
     $(this).hide();
     $(this).closest('.display-buttons').find('.hide-tasks').show();
@@ -42,8 +30,21 @@ $(document).ready(function() {
     $('.completed').hide();
   })
 
+  //submits change of status for a task
   $('.edit_task').find('input[type=submit]').remove();
   $('.edit_task').find('input[type=checkbox]').click(function() {
     $(this).parent('form').submit();
+  });
+
+  // task list sorting
+  $.expr[":"].containsNoCase = function(el, i, m) {
+    var search = m[3];
+    if (!search) return false;
+    return new RegExp(search, "i").test($(el).text());
+  };
+  $("#filter").keyup(function() {
+    var search = $(this).val();
+    $("div.task-row").show();
+    if (search) $("div.task-row").not(":containsNoCase(" + search + ")").hide();
   });
 });
