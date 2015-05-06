@@ -31,6 +31,9 @@
                   <%= link_to "delete", task, method: :delete, data: { confirm: "Do you really want to delete this task?"}, class: "edit-button" %>
                   <%= link_to "edit", edit_task_path(task, list: list.id), id: "edit-task", class: "edit-button" %>
               <% end %>
+              <div class="task-image">
+                <%= image_tag task.image.url(:thumb) if task.image.present? %>
+              </div>
             </div>
           <% end %>
 
