@@ -18,7 +18,8 @@
 $(document).ready(function() {
 
   //toggles the complete list
-  $('.show-tasks').on('click', function() {
+  $('.show-tasks').on('click', function(e) {
+    e.preventDefault();
     $(this).hide();
     $(this).closest('.display-buttons').find('.hide-tasks').show();
     $('.completed').show();
