@@ -1,5 +1,7 @@
 <% if @task.complete?  %>
-  $('#edit_task_<%= @task.id %>').parent('.task-row').appendTo('.completed');
+  $('#edit_task_<%= @task.id %>').parent('.task-row').
+    appendTo('#<%= @task.list.id %> .completed');
 <% else %>
-  $('#edit_task_<%= @task.id %>').parent('.task-row').appendTo('.incomplete');
+  $('#edit_task_<%= @task.id %>').parent('.task-row').
+    appendTo('#<%= @task.list.id %> .incomplete');
 <% end %>
