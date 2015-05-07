@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :list
 
+  before_validation :set_email
   before_save :set_due_date
   after_create :send_new_task_email
   after_update :send_update_task_email
@@ -35,11 +36,19 @@ class Task < ActiveRecord::Base
     self.due_date = Date.tomorrow if new_record?
   end
 
+  def set_email
+    parsed_title = (self.title).split("//cc")
+    self.title = parsed_title[0]
+    if parsed_title[1]
+      self.email = parsed_title[1].strip
+    end
+  end
+
   def send_new_task_email
-    NewTaskMailer.new_task_email(email="laurawhalin@gmail.com", Task.last).deliver_now
+    NewTaskMailer.new_task_email(Task.last.email, Task.last).deliver_now if Task.last.email
   end
 
   def send_update_task_email
-    UpdateTaskMailer.update_task_email(email="laurawhalin@gmail.com", Task.last_updated).deliver_now
+    UpdateTaskMailer.update_task_email(Task.last_updated.email, Task.last_updated).deliver_now if Task.last_updated.email
   end
 end
