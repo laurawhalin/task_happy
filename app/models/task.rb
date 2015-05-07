@@ -9,8 +9,8 @@ class Task < ActiveRecord::Base
   belongs_to :list
 
   before_save :set_due_date
-  # after_create :send_new_task_email
-  # after_update :send_update_task_email
+  after_create :send_new_task_email
+  after_update :send_update_task_email
 
   scope :complete, -> { where status: "complete" }
   scope :incomplete, -> { where status: "incomplete" }
