@@ -11,6 +11,5 @@ class NewTaskMailerTest < ActionMailer::TestCase
     assert_equal ['laurawhalin@gmail.com'], email.from
     assert_equal ['foo@bar.com'], email.to
     assert_equal altered_result, email.body.to_s.split(" ").join
-    require 'pry' ; binding.pry
   end
 end
